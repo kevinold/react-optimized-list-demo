@@ -1,0 +1,21 @@
+{
+  "name": "expenses-react",
+  "version": "0.0.0",
+  "description": "expenses-react demo",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kevinold/expenses-react.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^1.3.6",
+    "gulp-less": "^1.3.3",
+    "gulp-watch": "^0.6.9",
+    "gulp-webserver": "^0.4.0"
+  }
+}
