@@ -3,19 +3,100 @@
 <head>
   <meta charset="UTF-8">
   <title>First Component</title>
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-  <script src="js/react-0.11.1.js"></script>
-  <script src="js/JSXTransformer-0.11.1.js"></script>
+  <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">-->
+  <script src="js/jquery-2.1.1.js"></script>
+  <script src="js/react-0.12.0.js"></script>
+  <script src="js/JSXTransformer-0.12.0.js"></script>
   <script src="js/lodash.underscore.js"></script>
   <script src="js/accounting.js"></script>
   <script src="js/faker.js"></script>
 </head>
-<body>
-<div id="app"></div>
+<style>
+ul li {
+  background-color: #f0f0f0;
+  margin-bottom: 1px;
+  padding-top: 7px;
+  padding-left: 20px;
+  height: 30px;
+}
+</style>
+<body style="height: 100%">
 
 <script type="text/jsx">
 /*** @jsx React.DOM */
 
+var App = React.createClass({
+  getInitialState: function() {
+    return { pageY: 0,
+             pageHeight: window.innerHeight
+    };
+  },
+  componentDidMount: function() {
+    var that = this;
+    var numItems = this.props.items.length;
+    document.querySelector('.list').style.height = numItems * 31 + 'px';
+    var ul = document.querySelector('ul');
+    ul.style.top = this.state.pageY + 'px';
+    window.addEventListener('scroll', function(e) {
+      that.setState({ pageY: Math.max(e.pageY, 0) });
+      that.setState({ pageHeight: window.innerHeight });
+    });
+  },
+ 
+  render: function() {
+    var pageY = this.state.pageY;
+    var begin = pageY / 31 | 0;
+    // Add 2 so that the top and bottom of the page are filled with
+    // next/prev item, not just whitespace if item not in full view
+    var end = begin + (this.state.pageHeight / 31 | 0 + 2);
+ 
+    var offset = pageY % 31;
+    
+    /*console.log(this.state);
+    console.log(this.props);
+    console.log('offset: ', offset);*/
+    var listStyle = { 'position': 'relative', 'top': (-offset) + 'px' };
+    /*return React.DOM.div(
+      { className: 'list', style: listStyle },
+      React.DOM.ul(
+        this.props.items.slice(begin, end).map(function(item) {
+          return React.DOM.li(null, item.title);
+        })
+      )
+    );*/
+
+    var listItems = this.props.items.slice(begin, end).map(function(item) {
+         return <li>{item.title}</li>
+    });
+    return (
+      <div className='list' style={ { 'position': 'relative', 'top': (-offset) + 'px' } }>
+      <ul style={ {'top': this.state.pageY + 'px' } }>
+        {listItems}
+        </ul>
+      </div>
+    ); 
+
+  }
+});
+
+var items = [];
+for(var i=0; i<5000; i++) {
+  items.push({
+    title: 'Foo Bar ' + i
+  });
+}
+
+var app = App({ items: items });
+
+
+function render() {
+  React.renderComponent(app, document.body);
+  requestAnimationFrame(render);
+}
+ 
+render();
+
+//React.renderComponent(<App items={items} />, document.getElementById('app'));
 
 </script>
 </body>
