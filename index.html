@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>First Component</title>
   <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">-->
-  <script src="js/jquery-2.1.1.js"></script>
+  <script src="js/jquery-1.10.2.js"></script>
   <script src="js/react-0.12.0.js"></script>
   <script src="js/JSXTransformer-0.12.0.js"></script>
   <script src="js/lodash.underscore.js"></script>
@@ -12,6 +12,25 @@
   <script src="js/faker.js"></script>
 </head>
 <style>
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: white;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    top: 0;
+}
 ul li {
   background-color: #f0f0f0;
   margin-bottom: 1px;
@@ -37,7 +56,8 @@ var App = React.createClass({
     document.querySelector('.list').style.height = numItems * 31 + 'px';
     var ul = document.querySelector('ul');
     ul.style.top = this.state.pageY + 'px';
-    window.addEventListener('scroll', function(e) {
+    $(document).on('scroll', function(e) {
+      console.log(e);
       that.setState({ pageY: Math.max(e.pageY, 0) });
       that.setState({ pageHeight: window.innerHeight });
     });
