@@ -16,5 +16,10 @@ Well, I wanted his code pulled out into a working React component for learning p
 - Moved `window.addEventListener('scroll'...` into to `componentDidMount()`
 - Use `setState()`
 
+# Fire it up
 
+```
+npm install
+gulp
+```
 
